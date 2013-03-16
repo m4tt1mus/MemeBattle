@@ -1,4 +1,7 @@
-﻿using Moq;
+﻿using System.Web.Mvc;
+using MemeBattle.Controllers;
+using MemeBattle.Models;
+using Moq;
 using NUnit.Framework;
 using System;
 using System.Collections.Generic;
@@ -22,37 +25,30 @@ namespace MemeBattle.Tests
         // Get Memes
         // Meme attack / Reduce meme defense
 
+        [Test]
+        public void Index_Always_RedirectsToChooseMeme()
+        {
+            HomeController c = new HomeController();
+
+            RedirectToRouteResult result = c.Index();
+
+            Assert.AreEqual("ChooseMeme", result.RouteValues["action"]);
+        }
 
         [Test]
-        public void Unit_Scenario_ExpectedBehavior()
+        public void ChooseMeme_UserHasntSelectedAMeme_ReturnsListOfMemesToChoose()
         {
-            // GetAvailablePlayableMeme
-            var memeRepositoryMock = new Mock<IMemeRepository>();
-            var memeRepository = memeRepositoryMock.Object;
-
-            List<Meme> memes = memeRepository.GetPlayableMemes();
-
-
+            HomeController c = new HomeController();
 
         }
-    }
 
-    public class Meme
-    {
-        public string Name;
-        public string PhotoName;
-        public List<IAttackBehavior> Attacks;
 
-    }
+        // 1) no meme in session, make them choose one
+        [Test]
+        public void Index_NoMemeInSession_SendUserToSelectAMeme()
+        {
+            throw new NotImplementedException();
+        }
 
-    public interface IMemeRepository
-    {
-
-        List<Meme> GetPlayableMemes();
-    }
-
-    public interface IAttackBehavior
-    {
-        public void Attack(Meme target);
     }
 }

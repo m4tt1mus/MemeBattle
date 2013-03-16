@@ -14,6 +14,11 @@ namespace MemeBattle
                 routeTemplate: "api/{controller}/{id}",
                 defaults: new { id = RouteParameter.Optional }
             );
+
+            // This removes XML request support, but makes things return in JSON by default
+            var appXmlType = config.Formatters.XmlFormatter
+                .SupportedMediaTypes.FirstOrDefault(t => t.MediaType == "application/xml");
+            config.Formatters.XmlFormatter.SupportedMediaTypes.Remove(appXmlType);
         }
     }
 }
