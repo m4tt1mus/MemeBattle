@@ -18,7 +18,7 @@ namespace MemeBattle.Controllers
         // Choose your meme to use in battle
         public ActionResult ChooseMeme()
         {
-            throw new NotImplementedException();
+            return View();
         }
 
 
