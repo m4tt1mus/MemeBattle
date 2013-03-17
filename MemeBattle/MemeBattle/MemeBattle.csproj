@@ -146,7 +146,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="App_Start\BundleConfig.cs" />
-    <Compile Include="App_Start\ServiceResolverAdapter.cs" />
+    <Compile Include="App_Start\NinjectDependencyResolver.cs" />
     <Compile Include="App_Start\FilterConfig.cs" />
     <Compile Include="App_Start\RavenModule.cs" />
     <Compile Include="App_Start\NinjectWebCommon.cs" />
@@ -155,8 +155,6 @@
     <Compile Include="App_Start\WebApiConfig.cs" />
     <Compile Include="Controllers\GameController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
-    <Compile Include="Controllers\RavenApiController.cs" />
-    <Compile Include="Controllers\RavenController.cs" />
     <Compile Include="Models\MemeSelectedAttribute.cs" />
     <Compile Include="Controllers\MemeApiController.cs" />
     <Compile Include="Global.asax.cs">
@@ -227,9 +225,16 @@
     <None Include="Scripts\jquery-1.7.1.intellisense.js" />
     <Content Include="Images\Memes\CrazyGirl.jpg" />
     <Content Include="Images\Memes\CyclistCat.jpg" />
+    <Content Include="Images\Memes\ElyseQuit.jpg" />
     <Content Include="Images\Memes\HitlerCat.jpg" />
+    <Content Include="Images\Memes\HoneyBadger.gif" />
+    <Content Include="Images\Memes\HorseHead.jpg" />
+    <Content Include="Images\Memes\LimeCat.jpg" />
+    <Content Include="Images\Memes\LulzSec.jpg" />
     <Content Include="Images\Memes\NyanCat.jpg" />
     <Content Include="Images\Memes\OmgCat.jpg" />
+    <Content Include="Images\Memes\PancakeBunny.jpg" />
+    <Content Include="Images\Memes\SadKeano.jpg" />
     <Content Include="Images\Memes\TardCat.jpg" />
     <Content Include="Scripts\jquery-1.7.1.js" />
     <Content Include="Scripts\jquery-1.7.1.min.js" />
