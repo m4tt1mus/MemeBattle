@@ -11,16 +11,25 @@ namespace MemeBattle.Controllers
     public class MemeApiController : RavenApiController
     {
         // GET api/values
-        public IEnumerable<string> GetMemes()
+        public List<Meme> GetAll()
         {
 
-            return new string[] { "value1", "value2" };
+            List<Meme> memes = new List<Meme>();
+            using (var conn = RavenDb.OpenSession())
+            {
+                memes = conn.Query<Meme>().ToList();
+            }
+            return memes;
         }
 
         public void Add(Meme meme)
         {
-            
-            
+            using (var conn = RavenDb.OpenSession())
+            {
+                conn.Store(meme, meme.Name);
+                conn.SaveChanges();
+            }
+
         }
 
         // GET api/values/5

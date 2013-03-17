@@ -152,14 +152,12 @@
     <Compile Include="Controllers\GameController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\RavenApiController.cs" />
-    <Compile Include="Models\MemeRavenRepo.cs" />
     <Compile Include="Models\MemeSelectedAttribute.cs" />
     <Compile Include="Controllers\MemeApiController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="Models\IAttackBehavior.cs" />
-    <Compile Include="Models\AMemeRepo.cs" />
     <Compile Include="Models\Meme.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

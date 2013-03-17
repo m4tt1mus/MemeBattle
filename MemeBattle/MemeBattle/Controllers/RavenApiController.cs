@@ -16,7 +16,7 @@ namespace MemeBattle.Controllers
 {
     public abstract class RavenApiController : ApiController
     {
-        public IDocumentStore Store
+        public IDocumentStore RavenDb
         {
             get { return LazyDocStore.Value; }
         }
@@ -25,28 +25,13 @@ namespace MemeBattle.Controllers
         {
             var docStore = new EmbeddableDocumentStore()
             {
-                DataDirectory = "~/App_Data",
+                DataDirectory = "~/App_Data/Raven",
                 UseEmbeddedHttpServer = true
             };
 
             docStore.Initialize();
             return docStore;
         });
-
-        public IAsyncDocumentSession Session { get; set; }
-
-        public async override Task<HttpResponseMessage> ExecuteAsync(
-            HttpControllerContext controllerContext,
-            CancellationToken cancellationToken)
-        {
-            using (Session = Store.OpenAsyncSession())
-            {
-                var result = await base.ExecuteAsync(controllerContext, cancellationToken);
-                await Session.SaveChangesAsync();
-
-                return result;
-            }
-        }
 
     }
 }
