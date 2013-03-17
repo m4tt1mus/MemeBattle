@@ -9,8 +9,6 @@ namespace MemeBattle.Models
     {
         public string Name;
         public string PhotoName;
-        //public List<IAttackBehavior> Attacks;
-        //public int Defense;
-        //public int Stamina;
+        public int Votes;
     }
 }

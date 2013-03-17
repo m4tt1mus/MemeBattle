@@ -1,0 +1,42 @@
+﻿@{
+    ViewBag.Title = "All Meme";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>All Meme</h2>
+<div class="allMemes" data-bind="foreach: memes" >
+    <div class="meme">
+        <div class="name" data-bind="text: Name"></div>
+        <div>
+            <img data-bind="memeImg: PhotoName" />
+        </div>
+    </div>
+</div>
+
+<br />
+<br />
+
+<pre data-bind="text: ko.toJSON(viewModel, null, 2)"></pre>
+
+@section scripts
+{
+    <script type="text/javascript">
+        ko.bindingHandlers.memeImg = {
+            update: function (element, valueAccessor, allBindingsAccessor, viewModel, bindingContext) {
+                element.src = bindingContext.$root.imgUrlBase + valueAccessor();
+                $(element).width(250);
+            }
+        };
+
+        var ViewModelConstructor = function () {
+            self = this;
+            self.imgUrlBase = "@Url.Content("~/Images/Memes/")";
+            self.memes = ko.mapping.fromJS([]);
+        };
+        var viewModel = new ViewModelConstructor();
+        ko.applyBindings(viewModel);
+        $.getJSON("/api/MemeApi/GetAll", function (data) {
+            viewModel.memes(data);
+        });
+    </script>
+}

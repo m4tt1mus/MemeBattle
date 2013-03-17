@@ -28,10 +28,7 @@ namespace MemeBattle.App_Start
 
         private IDocumentStore InitDocStore(IContext context)
         {
-            var docStore = new EmbeddableDocumentStore()
-            {
-                DataDirectory = "~/App_Data/Raven/"
-            };
+            var docStore = new EmbeddableDocumentStore() { };
 
             docStore.Initialize();
             RavenIndexes.CreateIndexes(docStore);

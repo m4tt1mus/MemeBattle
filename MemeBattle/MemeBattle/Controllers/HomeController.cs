@@ -1,11 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
-using System.Web.Http;
-using System.Web.Mvc;
+﻿using System.Web.Mvc;
 using Raven.Client;
-using Raven.Client.Embedded;
 
 namespace MemeBattle.Controllers
 {
@@ -20,14 +14,13 @@ namespace MemeBattle.Controllers
 
         public RedirectToRouteResult Index()
         {
-            return RedirectToAction("ChooseMeme", "Home");
+            return RedirectToAction("AllMemes", "Home");
         }
 
         // Choose your meme to use in battle
-        public ActionResult ChooseMeme()
+        public ActionResult AllMemes()
         {
-
-
+            
             return View();
         }
 

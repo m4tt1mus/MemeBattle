@@ -54,15 +54,13 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="MemeApiControllerTests.cs" />
-    <Compile Include="MemeTests.cs" />
+    <Compile Include="Integration\MemeApiControllerTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="Integration\" />
     <Folder Include="Unit\" />
   </ItemGroup>
   <ItemGroup>

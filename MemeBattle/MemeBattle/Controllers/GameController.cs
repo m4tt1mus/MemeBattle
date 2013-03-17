@@ -6,12 +6,11 @@ using System.Web.Mvc;
 
 namespace MemeBattle.Controllers
 {
-    [MemeSelectedAttribute]
-    public class GameController
+    public class GameController : Controller
     {
-        public ActionResult Play()
+        public ActionResult Battle()
         {
-            throw new NotImplementedException();
+            return View();
         }
     }
 }

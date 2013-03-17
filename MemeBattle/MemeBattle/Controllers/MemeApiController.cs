@@ -17,6 +17,14 @@ namespace MemeBattle.Controllers
             this.session = session;
         }
 
+        public List<Meme> GetTwoRandom()
+        {
+            List<Meme> memes = session.Query<Meme>()
+                .Customize(x => x.RandomOrdering())
+                .Take(2).ToList();
+            return memes;
+        }
+
         // GET api/values
         public List<Meme> GetAll()
         {

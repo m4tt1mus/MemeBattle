@@ -155,12 +155,11 @@
     <Compile Include="App_Start\WebApiConfig.cs" />
     <Compile Include="Controllers\GameController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
-    <Compile Include="Models\MemeSelectedAttribute.cs" />
+    <Compile Include="Models\UrlHelperExtensions.cs" />
     <Compile Include="Controllers\MemeApiController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
-    <Compile Include="Models\IAttackBehavior.cs" />
     <Compile Include="Models\Meme.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
@@ -277,7 +276,8 @@
     <Content Include="Views\_ViewStart.cshtml" />
     <Content Include="Views\Shared\Error.cshtml" />
     <Content Include="Views\Shared\_Layout.cshtml" />
-    <Content Include="Views\Home\ChooseMeme.cshtml" />
+    <Content Include="Views\Home\AllMemes.cshtml" />
+    <Content Include="Views\Game\Battle.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
