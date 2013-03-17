@@ -221,7 +221,6 @@
     <Content Include="Content\themes\base\minified\jquery.ui.theme.min.css" />
     <Content Include="favicon.ico" />
     <Content Include="Global.asax" />
-    <Content Include="App_Data\Data" />
     <None Include="Scripts\jquery-1.7.1.intellisense.js" />
     <Content Include="Images\Memes\CrazyGirl.jpg" />
     <Content Include="Images\Memes\CyclistCat.jpg" />
@@ -280,7 +279,9 @@
     <Content Include="Views\Shared\_Layout.cshtml" />
     <Content Include="Views\Home\ChooseMeme.cshtml" />
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <Folder Include="App_Data\" />
+  </ItemGroup>
   <ItemGroup>
     <Content Include="packages.config" />
   </ItemGroup>
