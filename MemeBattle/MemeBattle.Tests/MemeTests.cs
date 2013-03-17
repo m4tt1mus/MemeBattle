@@ -8,6 +8,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Raven.Client;
 
 namespace MemeBattle.Tests
 {
@@ -28,7 +29,7 @@ namespace MemeBattle.Tests
         [Test]
         public void Index_Always_RedirectsToChooseMeme()
         {
-            HomeController c = new HomeController();
+            HomeController c = new HomeController(new Mock<IDocumentSession>().Object);
 
             RedirectToRouteResult result = c.Index();
 
@@ -38,9 +39,9 @@ namespace MemeBattle.Tests
         [Test]
         public void ChooseMeme_UserHasntSelectedAMeme_ReturnsListOfMemesToChoose()
         {
-            HomeController c = new HomeController();
+            HomeController c = new HomeController(new Mock<IDocumentSession>().Object);
 
-
+            
         }
 
 

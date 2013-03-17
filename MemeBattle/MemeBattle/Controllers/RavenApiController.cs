@@ -25,13 +25,12 @@ namespace MemeBattle.Controllers
         {
             var docStore = new EmbeddableDocumentStore()
             {
-                DataDirectory = "~/App_Data/Raven",
+                DataDirectory = "~/App_Data",
                 UseEmbeddedHttpServer = true
             };
 
             docStore.Initialize();
             return docStore;
         });
-
     }
 }

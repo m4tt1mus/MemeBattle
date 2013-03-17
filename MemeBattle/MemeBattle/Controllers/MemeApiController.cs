@@ -5,31 +5,31 @@ using System.Net;
 using System.Net.Http;
 using System.Web.Http;
 using MemeBattle.Models;
+using Raven.Client;
 
 namespace MemeBattle.Controllers
 {
-    public class MemeApiController : RavenApiController
+    public class MemeApiController : ApiController
     {
+        private IDocumentSession session;
+        public MemeApiController(IDocumentSession session)
+        {
+            this.session = session;
+        }
+
         // GET api/values
         public List<Meme> GetAll()
         {
 
             List<Meme> memes = new List<Meme>();
-            using (var conn = RavenDb.OpenSession())
-            {
-                memes = conn.Query<Meme>().ToList();
-            }
+            memes = session.Query<Meme>().ToList();
             return memes;
         }
 
         public void Add(Meme meme)
         {
-            using (var conn = RavenDb.OpenSession())
-            {
-                conn.Store(meme, meme.Name);
-                conn.SaveChanges();
-            }
-
+            session.Store(meme, meme.Name);
+            session.SaveChanges();
         }
 
         // GET api/values/5
