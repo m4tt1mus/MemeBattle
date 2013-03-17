@@ -10,6 +10,7 @@ using System.Web.Http.Controllers;
 using System.Web.Mvc;
 using Raven.Client;
 using Raven.Client.Document;
+using Raven.Client.Embedded;
 
 namespace MemeBattle.Controllers
 {
@@ -22,10 +23,12 @@ namespace MemeBattle.Controllers
 
         private static readonly Lazy<IDocumentStore> LazyDocStore = new Lazy<IDocumentStore>(() =>
         {
-            var docStore = new DocumentStore
+            var docStore = new EmbeddableDocumentStore()
             {
-                Url = "http://localhost:8080",
-                DefaultDatabase = "WebApiSample"
+                //Url = "http://localhost:8080",
+                //DefaultDatabase = "Data",
+                DataDirectory = "~/App_Data",
+                UseEmbeddedHttpServer = true
             };
 
             docStore.Initialize();

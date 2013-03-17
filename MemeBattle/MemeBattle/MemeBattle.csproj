@@ -151,8 +151,10 @@
     <Compile Include="App_Start\WebApiConfig.cs" />
     <Compile Include="Controllers\GameController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
+    <Compile Include="Controllers\RavenApiController.cs" />
+    <Compile Include="Models\MemeRepository.cs" />
     <Compile Include="Models\MemeSelectedAttribute.cs" />
-    <Compile Include="Controllers\MemesValuesController.cs" />
+    <Compile Include="Controllers\MemeApiController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>

@@ -26,6 +26,19 @@ namespace MemeBattle.Tests
         // Meme attack / Reduce meme defense
 
         [Test]
+        public void Add_AddNewMeme_NoException()
+        {
+            MemeApiController memeApi = new MemeApiController();
+            Meme meme = new Meme()
+                {
+                    Name = "TestMeme",
+                    PhotoName = "TestMeme.jpg"
+                };
+
+            memeApi.Add(meme);
+        }
+
+        [Test]
         public void Index_Always_RedirectsToChooseMeme()
         {
             HomeController c = new HomeController();
