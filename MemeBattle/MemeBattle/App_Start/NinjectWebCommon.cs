@@ -47,6 +47,7 @@ namespace MemeBattle.App_Start
 
             RegisterServices(kernel);
 
+            // http://www.peterprovost.org/blog/2012/06/19/adding-ninject-to-web-api
             // Install our Ninject-based IDependencyResolver into the Web API config
             GlobalConfiguration.Configuration.DependencyResolver = new NinjectDependencyResolver(kernel);
 
