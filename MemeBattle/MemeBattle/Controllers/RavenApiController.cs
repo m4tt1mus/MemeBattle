@@ -25,8 +25,6 @@ namespace MemeBattle.Controllers
         {
             var docStore = new EmbeddableDocumentStore()
             {
-                //Url = "http://localhost:8080",
-                //DefaultDatabase = "Data",
                 DataDirectory = "~/App_Data",
                 UseEmbeddedHttpServer = true
             };

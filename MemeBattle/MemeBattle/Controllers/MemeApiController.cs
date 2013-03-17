@@ -19,8 +19,8 @@ namespace MemeBattle.Controllers
 
         public void Add(Meme meme)
         {
-            MemeRepository memeRepository = new MemeRepository(Session);
-            memeRepository.Add(meme);
+            
+            
         }
 
         // GET api/values/5
