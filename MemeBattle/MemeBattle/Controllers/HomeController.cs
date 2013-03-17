@@ -9,7 +9,7 @@ using Raven.Client.Embedded;
 
 namespace MemeBattle.Controllers
 {
-    public class HomeController : RavenController
+    public class HomeController : Controller
     {
 
         private IDocumentSession session;
