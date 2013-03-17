@@ -1,21 +1,41 @@
 ﻿@{
     ViewBag.Title = "Meme Battle";
-}
 
-<h2>Battle</h2>
-<div class="battle" data-bind="foreach: memes">
-    <div class="meme" style="float: left">
-        <div class="name" data-bind="text: Name"></div>
+}
+<div class="loading" data-bind="visible: loading">loading</div>
+
+
+<div class="row">
+    <div class="span12 text-center">
+        <h2 class="">Battle Meme</h2>
+        <div class="">Click to Choose a Winner</div>
+    </div>
+</div>
+
+<div class="battle row" data-bind="visible: !loading">
+    <div class="meme span4 offset1">
+        <div class="name text-center" data-bind="text: memeOne.Name"></div>
         <div>
-            <img data-bind="memeImg: PhotoName" />
+            <img data-bind="memeImg: memeOne.PhotoName" />
+        </div>
+    </div>
+    <div class="vs span2 text-center">VS</div>
+    <div class="meme span4">
+        <div class="name text-center" data-bind="text: memeTwo.Name"></div>
+        <div>
+            <img data-bind="memeImg: memeTwo.PhotoName" />
         </div>
     </div>
 </div>
 
-<br />
-<br />
-
-<pre data-bind="text: ko.toJSON(viewModel, null, 2)"></pre>
+<div class="row">
+    <div class="span4 offset1 stats">
+        <div class="votes">Votes: <span data-bind="text: memeOne.Votes"></span></div>
+    </div>
+    <div class="span4 offset2 stats">
+        <div class="votes">Votes: <span data-bind="text: memeTwo.Votes"></span></div>
+    </div>
+</div>
 
 @section scripts
 {
@@ -23,19 +43,24 @@
         ko.bindingHandlers.memeImg = {
             update: function (element, valueAccessor, allBindingsAccessor, viewModel, bindingContext) {
                 element.src = bindingContext.$root.imgUrlBase + valueAccessor();
-                $(element).width(250);
+                $(element).width(370);
             }
         };
 
         var ViewModelConstructor = function () {
             self = this;
             self.imgUrlBase = "@Url.Content("~/Images/Memes/")";
-            self.memes = ko.mapping.fromJS([]);
+            self.memeOne = null;
+            self.memeTwo = null;
+            self.loading = true;
         };
         var viewModel = new ViewModelConstructor();
-        ko.applyBindings(viewModel);
+
         $.getJSON("/api/MemeApi/GetTwoRandom", function (data) {
-            viewModel.memes(data);
+            viewModel.memeOne = data[0];
+            viewModel.memeTwo = data[1];
+            viewModel.loading = false;
+            ko.applyBindings(viewModel);
         });
     </script>
 }

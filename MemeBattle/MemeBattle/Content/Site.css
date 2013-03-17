@@ -1,20 +1,21 @@
-﻿* {
-    margin: 0;
+﻿h2 {
     padding: 0;
-    text-align: center;
-    font-family: "calibri", Garamond, Verdana;
+    margin: 0;
 }
-
-h2 {
-    padding: .5em;
-    font-size: 2.5em;
-}
-
 .name {
-    font-size: 120%;
-    font-weight: bold;
+    font-size: 1.5em;
+   
+}
+
+.vs {
+    font-size: 5em;
+    padding-top: 100px;
 }
 
 pre {
     text-align: left;
+}
+
+.stats {
+    margin-top: 1em;
 }

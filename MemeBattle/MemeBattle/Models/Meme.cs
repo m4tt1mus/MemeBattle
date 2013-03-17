@@ -10,5 +10,6 @@ namespace MemeBattle.Models
         public string Name;
         public string PhotoName;
         public int Votes;
+        public string HashTag;
     }
 }
