@@ -63,10 +63,8 @@
             ko.applyBindings(viewModel);
         });
 
-        $.ready(function () {
-            $(".battle").on('click', '.meme', function() {
-                alert('boom')
-            });
+        $(".battle").on('click', '.meme', function (event) {
+            alert('boom');
         });
     </script>
 }
