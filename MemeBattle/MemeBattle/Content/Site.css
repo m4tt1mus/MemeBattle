@@ -2,6 +2,7 @@
     padding: 0;
     margin: 0;
 }
+
 .name {
     font-size: 1.5em;
    
@@ -16,6 +17,6 @@ pre {
     text-align: left;
 }
 
-.stats {
+.stats, .battle {
     margin-top: 1em;
 }

@@ -8,7 +8,7 @@
 <div class="row">
     <div class="span12 text-center">
         <h2 class="">Battle Meme</h2>
-        <div class="">Click to Choose a Winner</div>
+        <div class="">Click a Meme to choose a winner.</div>
     </div>
 </div>
 
@@ -61,6 +61,12 @@
             viewModel.memeTwo = data[1];
             viewModel.loading = false;
             ko.applyBindings(viewModel);
+        });
+
+        $.ready(function () {
+            $(".battle").on('click', '.meme', function() {
+                alert('boom')
+            });
         });
     </script>
 }
