@@ -17,7 +17,9 @@
                 <img data-bind="memeImg: memeOne.PhotoName" />
             </div>
         </div>
+        <!-- if: $index == 1 -->
         <div class="vs span2 text-center">VS</div>
+        <!-- /ko -->
         <div class="meme span4" data-bind="dataDash: { name: 'id', content: memeTwo.DisplayName}">
             <div class="name text-center" data-bind="text: memeTwo.HashTag"></div>
             <div>
@@ -26,17 +28,24 @@
         </div>
     </div>
 
+
+
     <div class="row" data-bind="visible: !loadingMemes()">
         <div class="span4 offset1 stats">
             <div class="votes">Votes: <span data-bind="text: memeOne.Votes"></span></div>
-            <div class="twitter">
-                Talkin' bout <span data-bind="text: memeOne.HashTag"></span>
+            <div class="twitter" data-bind="visible: memeOne.Tweets.results.length > 0">
+                <div>
+                    Talkin' bout <span data-bind="text: memeOne.HashTag"></span>
+                </div>
+                <div class="tweet" data-bind="foreach: memeOne.Tweets">
+                    
+                </div>
             </div>
         </div>
         <div class="span4 offset2 stats">
             <div class="votes">Votes: <span data-bind="text: memeTwo.Votes"></span></div>
-            <div class="twitter">
-                Talkin' bout <span data-bind="text: memeTwo.HashTag"></span>
+            <div class="twitter" data-bind="visible: memeTwo.Tweets.results.length > 0">
+                <div>Talkin' bout <span data-bind="text: memeTwo.HashTag"></span></div>
             </div>
         </div>
     </div>
@@ -68,9 +77,7 @@
             self = this;
             self.imgUrlBase = "@Url.Content("~/Images/Memes/")";
             self.memeOne = null;
-            self.memeOneTweets = null;
             self.memeTwo = null;
-            self.memeTwoTweets = null;
             self.loadingMemes = ko.observable(true);
             self.loadingMemeOneTweets = ko.observable(true);
             self.loadingMemeTwoTweets = ko.observable(true);
@@ -88,7 +95,7 @@
                 url: "https://search.twitter.com/search.json?" + $.param({ q: viewModel.memeOne.HashTag }),
                 dataType: 'jsonp',
                 success: function (data) {
-                    viewModel.memeOneTweets = data;
+                    viewModel.memeOne.Tweets = data;
                     viewModel.loadingMemeOneTweets(false);
                     LoadingCompleteCheck();
                 }
@@ -98,7 +105,7 @@
                 url: "https://search.twitter.com/search.json?" + $.param({ q: viewModel.memeTwo.HashTag }),
                 dataType: 'jsonp',
                 success: function (data) {
-                    viewModel.memeTwoTweets = data;
+                    viewModel.memeTwo.Tweets = data;
                     viewModel.loadingMemeTwoTweets(false);
                     LoadingCompleteCheck();
                 }

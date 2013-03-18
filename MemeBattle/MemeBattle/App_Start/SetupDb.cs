@@ -38,46 +38,46 @@ namespace MemeBattle.App_Start
                 };
             session.Store(cyclistCat);
 
-            Meme elyse = new Meme()
-            {
-                DisplayName = "Elyse",
-                PhotoName = "ElyseQuit.jpg",
-                HashTag = "#MemeBattlesElyse"
-            };
-            session.Store(elyse);
+            //Meme elyse = new Meme()
+            //{
+            //    DisplayName = "Elyse",
+            //    PhotoName = "ElyseQuit.jpg",
+            //    HashTag = "#MemeBattlesElyse"
+            //};
+            //session.Store(elyse);
 
 
-            Meme hitlerCat = new Meme()
-                {
-                    DisplayName = "Hilter Cat",
-                    PhotoName = "HitlerCat.jpg",
-                    HashTag = "#MemeBattlesHitlerCat"
-                };
-            session.Store(hitlerCat);
+            //Meme hitlerCat = new Meme()
+            //    {
+            //        DisplayName = "Hilter Cat",
+            //        PhotoName = "HitlerCat.jpg",
+            //        HashTag = "#MemeBattlesHitlerCat"
+            //    };
+            //session.Store(hitlerCat);
 
-            Meme honeyBadger = new Meme()
-                {
-                    DisplayName = "Honey Badger",
-                    PhotoName = "HoneyBadger.gif",
-                    HashTag = "#MemeBattlesHoneyBadger"
-                };
-            session.Store(honeyBadger);
+            //Meme honeyBadger = new Meme()
+            //    {
+            //        DisplayName = "Honey Badger",
+            //        PhotoName = "HoneyBadger.gif",
+            //        HashTag = "#MemeBattlesHoneyBadger"
+            //    };
+            //session.Store(honeyBadger);
 
-            Meme limeCat = new Meme()
-                {
-                    DisplayName = "Lime Cat",
-                    PhotoName = "LimeCat.jpg",
-                    HashTag = "#MemeBattlesLimeCat"
-                };
-            session.Store(limeCat);
+            //Meme limeCat = new Meme()
+            //    {
+            //        DisplayName = "Lime Cat",
+            //        PhotoName = "LimeCat.jpg",
+            //        HashTag = "#MemeBattlesLimeCat"
+            //    };
+            //session.Store(limeCat);
 
-            Meme lulzSec = new Meme()
-                {
-                    DisplayName = "Lulz Sec",
-                    PhotoName = "LulzSec.jpg",
-                    HashTag = "#MemeBattlesLulzSec"
-                };
-            session.Store(lulzSec);
+            //Meme lulzSec = new Meme()
+            //    {
+            //        DisplayName = "Lulz Sec",
+            //        PhotoName = "LulzSec.jpg",
+            //        HashTag = "#MemeBattlesLulzSec"
+            //    };
+            //session.Store(lulzSec);
 
             session.SaveChanges();
         }
