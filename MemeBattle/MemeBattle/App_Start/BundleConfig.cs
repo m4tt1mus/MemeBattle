@@ -25,7 +25,8 @@ namespace MemeBattle
 
             bundles.Add(new ScriptBundle("~/bundles/knockout").Include(
                         "~/Scripts/knockout-2.2.1.debug.js",
-                        "~/Scripts/knockout.mapping-latest.debug.js"));
+                        "~/Scripts/knockout.mapping-latest.debug.js",
+                        "~/Scripts/knockout-extensions.js"));
 
             bundles.Add(new ScriptBundle("~/bundles/bootstrap").Include(
                 "~/Scripts/bootstrap.min.js"));

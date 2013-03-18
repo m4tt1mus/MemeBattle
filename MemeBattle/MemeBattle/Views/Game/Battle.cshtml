@@ -10,27 +10,20 @@
         </div>
     </div>
 
-    <div class="battle row" data-bind="visible: !loadingMemes()">
-        <div class="meme span4 offset1" data-bind="dataDash: { name: 'id', content: memeOne.DisplayName}">
-            <div class="name text-center" data-bind="text: memeOne.HashTag"></div>
-            <div>
-                <img data-bind="memeImg: memeOne.PhotoName" />
+    <div class="battle row" data-bind="foreach: memes, visible: !loading()">
+        <div class="meme span5" data-bind="dataDash: { name: 'id', content: DisplayName}">
+            <div class="name text-center" data-bind="text: HashTag"></div>
+            <div class="text-center">
+                <img data-bind="img: { pic: PhotoName, baseUrl: $root.imgUrlBase, width: 370 }" />
             </div>
         </div>
-        <!-- if: $index == 1 -->
-        <div class="vs span2 text-center">VS</div>
-        <!-- /ko -->
-        <div class="meme span4" data-bind="dataDash: { name: 'id', content: memeTwo.DisplayName}">
-            <div class="name text-center" data-bind="text: memeTwo.HashTag"></div>
-            <div>
-                <img data-bind="memeImg: memeTwo.PhotoName" />
-            </div>
+        <div class="vs span2 text-center" data-bind="visible: $index() == 0">
+            VS
         </div>
     </div>
 
 
-
-    <div class="row" data-bind="visible: !loadingMemes()">
+    @*    <div class="row" data-bind="visible: !loading()">
         <div class="span4 offset1 stats">
             <div class="votes">Votes: <span data-bind="text: memeOne.Votes"></span></div>
             <div class="twitter" data-bind="visible: memeOne.Tweets.results.length > 0">
@@ -42,88 +35,70 @@
                 </div>
             </div>
         </div>
-        <div class="span4 offset2 stats">
-            <div class="votes">Votes: <span data-bind="text: memeTwo.Votes"></span></div>
-            <div class="twitter" data-bind="visible: memeTwo.Tweets.results.length > 0">
-                <div>Talkin' bout <span data-bind="text: memeTwo.HashTag"></span></div>
-            </div>
-        </div>
-    </div>
+    </div>*@
 
 </div>
 
-<div class="loading" data-bind="visible: loadingMemes()">
+<div class="loading" data-bind="visible: loading()">
     <img src="/content/images/ajax-loader.gif" />
 </div>
 
 @section scripts
 {
     <script type="text/javascript">
-        ko.bindingHandlers.memeImg = {
-            update: function (element, valueAccessor, allBindingsAccessor, viewModel, bindingContext) {
-                element.src = bindingContext.$root.imgUrlBase + valueAccessor();
-                $(element).width(370);
-            }
-        };
 
-        ko.bindingHandlers.dataDash = {
-            update: function (element, valueAccessor, allBindingsAccessor, viewModel, bindingContext) {
-                var value = valueAccessor();
-                $(element).data(value.name, value.content);
-            }
-        };
 
         var ViewModelConstructor = function () {
             self = this;
             self.imgUrlBase = "@Url.Content("~/Images/Memes/")";
-            self.memeOne = null;
-            self.memeTwo = null;
-            self.loadingMemes = ko.observable(true);
-            self.loadingMemeOneTweets = ko.observable(true);
-            self.loadingMemeTwoTweets = ko.observable(true);
-            self.loading = ko.computed(function () {
-                return self.loadingMemes() && self.loadingMemeOneTweets() && self.loadingMemeTwoTweets();
-            }, this);
+            self.memes = null;
+            self.loading = ko.observable(true);
         };
         var viewModel = new ViewModelConstructor();
 
 
         // Load the recent mentions on twitter for the Memes
-        function LoadTwitterDiscussion() {
-            // TODO: combine these calls so i don't have duplicate code
-            $.ajax({
-                url: "https://search.twitter.com/search.json?" + $.param({ q: viewModel.memeOne.HashTag }),
-                dataType: 'jsonp',
-                success: function (data) {
-                    viewModel.memeOne.Tweets = data;
-                    viewModel.loadingMemeOneTweets(false);
-                    LoadingCompleteCheck();
-                }
-            });
 
-            $.ajax({
-                url: "https://search.twitter.com/search.json?" + $.param({ q: viewModel.memeTwo.HashTag }),
-                dataType: 'jsonp',
-                success: function (data) {
-                    viewModel.memeTwo.Tweets = data;
-                    viewModel.loadingMemeTwoTweets(false);
-                    LoadingCompleteCheck();
-                }
-            });
+        function LoadTwitterDiscussion(meme) {
+
+            meme.Tweets = { "completed_in": 0.006, "max_id": 313498494809825280, "max_id_str": "313498494809825280", "page": 1, "query": "%23MemeBattlesCrazyGirl", "refresh_url": "?since_id=313498494809825280&q=%23MemeBattlesCrazyGirl", "results": [{ "created_at": "Mon, 18 Mar 2013 03:54:00 +0000", "from_user": "Meme_Battle", "from_user_id": 1276707236, "from_user_id_str": "1276707236", "from_user_name": "Meme Battle", "geo": null, "id": 313498494809825280, "id_str": "313498494809825280", "iso_language_code": "en", "metadata": { "result_type": "recent" }, "profile_image_url": "http:\/\/a0.twimg.com\/sticky\/default_profile_images\/default_profile_0_normal.png", "profile_image_url_https": "https:\/\/si0.twimg.com\/sticky\/default_profile_images\/default_profile_0_normal.png", "source": "&lt;a href=&quot;http:\/\/twitter.com\/&quot;&gt;web&lt;\/a&gt;", "text": "#MemeBattlesCrazyGirl Lets get this API going" }], "results_per_page": 15, "since_id": 0, "since_id_str": "0" };
+            LoadingCompleteCheck();
+            //$.ajax({
+            //    url: "https://search.twitter.com/search.json?" + $.param({ q: meme.HashTag }),
+            //    dataType: 'jsonp',
+            //    success: function (data) {
+            //        meme.Tweets = data;
+            //        LoadingCompleteCheck();
+            //    }
+            //});
+
+            //// TODO: combine these calls so i don't have duplicate code
+            //$.ajax({
+            //    url: "https://search.twitter.com/search.json?" + $.param({ q: viewModel.memeOne.HashTag }),
+            //    dataType: 'jsonp',
+            //    success: function (data) {
+            //        viewModel.memeOne.Tweets = data;
+            //        viewModel.loadingMemeOneTweets(false);
+            //        LoadingCompleteCheck();
+            //    }
+            //});
         }
 
         // If everything is loaded, if it is applyBindings
+
         function LoadingCompleteCheck() {
-            if (!viewModel.loading())
+            if (self.memes != null && self.memes[0].Tweets != null && self.memes[1].Tweets != null) {
+                viewModel.loading(false);
                 ko.applyBindings(viewModel);
+            }
         }
 
         // Load the Meme opponents
         $.getJSON("/api/MemeApi/GetTwoRandom", function (data) {
-            viewModel.memeOne = data[0];
-            viewModel.memeTwo = data[1];
-            viewModel.loadingMemes(false);
-            LoadTwitterDiscussion();
+            viewModel.memes = data;
+
+            LoadTwitterDiscussion(viewModel.memes[0]);
+            LoadTwitterDiscussion(viewModel.memes[1]);
         });
 
         // Detect when someone chooses the winner
@@ -131,7 +106,7 @@
             // Make sure we aren't handling multiple fast clicks
             if (!viewModel.loading()) {
                 // Set loading
-                viewModel.loadingMemes(true);
+                viewModel.loading(true);
 
                 // Record vote
                 // TODO: make it so someone can't just send ajax calls to 
