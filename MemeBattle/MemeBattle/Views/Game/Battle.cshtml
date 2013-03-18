@@ -10,7 +10,7 @@
         </div>
     </div>
 
-    <div class="battle row" data-bind="visible: !loading()">
+    <div class="battle row" data-bind="visible: !loadingMemes()">
         <div class="meme span4 offset1" data-bind="dataDash: { name: 'id', content: memeOne.DisplayName}">
             <div class="name text-center" data-bind="text: memeOne.HashTag"></div>
             <div>
@@ -26,7 +26,7 @@
         </div>
     </div>
 
-    <div class="row" data-bind="visible: !loading()">
+    <div class="row" data-bind="visible: !loadingMemes()">
         <div class="span4 offset1 stats">
             <div class="votes">Votes: <span data-bind="text: memeOne.Votes"></span></div>
             <div class="twitter">
@@ -43,7 +43,7 @@
 
 </div>
 
-<div class="loading" data-bind="visible: loading()">
+<div class="loading" data-bind="visible: loadingMemes()">
     <img src="/content/images/ajax-loader.gif" />
 </div>
 
@@ -68,29 +68,63 @@
             self = this;
             self.imgUrlBase = "@Url.Content("~/Images/Memes/")";
             self.memeOne = null;
+            self.memeOneTweets = null;
             self.memeTwo = null;
-            //self.memeOneTweets = 
-            self.loading = ko.observable(true);
+            self.memeTwoTweets = null;
+            self.loadingMemes = ko.observable(true);
+            self.loadingMemeOneTweets = ko.observable(true);
+            self.loadingMemeTwoTweets = ko.observable(true);
+            self.loading = ko.computed(function () {
+                return self.loadingMemes() && self.loadingMemeOneTweets() && self.loadingMemeTwoTweets();
+            }, this);
         };
         var viewModel = new ViewModelConstructor();
+
+
+        // Load the recent mentions on twitter for the Memes
+        function LoadTwitterDiscussion() {
+            // TODO: combine these calls so i don't have duplicate code
+            $.ajax({
+                url: "https://search.twitter.com/search.json?" + $.param({ q: viewModel.memeOne.HashTag }),
+                dataType: 'jsonp',
+                success: function (data) {
+                    viewModel.memeOneTweets = data;
+                    viewModel.loadingMemeOneTweets(false);
+                    LoadingCompleteCheck();
+                }
+            });
+
+            $.ajax({
+                url: "https://search.twitter.com/search.json?" + $.param({ q: viewModel.memeTwo.HashTag }),
+                dataType: 'jsonp',
+                success: function (data) {
+                    viewModel.memeTwoTweets = data;
+                    viewModel.loadingMemeTwoTweets(false);
+                    LoadingCompleteCheck();
+                }
+            });
+        }
+
+        // If everything is loaded, if it is applyBindings
+        function LoadingCompleteCheck() {
+            if (!viewModel.loading())
+                ko.applyBindings(viewModel);
+        }
 
         // Load the Meme opponents
         $.getJSON("/api/MemeApi/GetTwoRandom", function (data) {
             viewModel.memeOne = data[0];
             viewModel.memeTwo = data[1];
-            viewModel.loading(false);
-            ko.applyBindings(viewModel);
+            viewModel.loadingMemes(false);
+            LoadTwitterDiscussion();
         });
-
-        // Load the recent mentions on twitter for the Memes
-
 
         // Detect when someone chooses the winner
         $(".battle").on('click', '.meme', function (event) {
             // Make sure we aren't handling multiple fast clicks
             if (!viewModel.loading()) {
                 // Set loading
-                viewModel.loading(true);
+                viewModel.loadingMemes(true);
 
                 // Record vote
                 // TODO: make it so someone can't just send ajax calls to 
