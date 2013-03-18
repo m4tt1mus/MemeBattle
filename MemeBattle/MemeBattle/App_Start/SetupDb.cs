@@ -24,7 +24,7 @@ namespace MemeBattle.App_Start
             // Add default memes
             Meme crazyGirl = new Meme()
                 {
-                    DisplayName = "CrazyGirl",
+                    DisplayName = "Crazy Girl",
                     PhotoName = "CrazyGirl.jpg",
                     HashTag = "#MemeBattlesCrazyGirl"
                 };

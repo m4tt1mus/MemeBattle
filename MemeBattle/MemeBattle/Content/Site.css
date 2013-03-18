@@ -1,11 +1,15 @@
-﻿h2 {
+﻿.content {
+    background-color: #ffffff;
+    padding-bottom: 2em;
+}
+
+h2 {
     padding: 0;
     margin: 0;
 }
 
 .name {
     font-size: 1.5em;
-   
 }
 
 .vs {
@@ -19,4 +23,23 @@ pre {
 
 .stats, .battle {
     margin-top: 1em;
+}
+
+.meme {
+    cursor: hand;
+    cursor: pointer;
+}
+
+.loading {
+    position: fixed;
+    height: 100%;
+    width: 100%;
+    background-color: #ffffff;
+    opacity: .95;
+}
+
+.loading img {
+    position: fixed;
+    top: 35%;
+    left: 45%;
 }
