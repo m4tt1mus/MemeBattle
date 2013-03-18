@@ -13,14 +13,14 @@
 </div>
 
 <div class="battle row" data-bind="visible: !loading()">
-    <div class="meme span4 offset1">
+    <div class="meme span4 offset1" data-bind="dataDash: { name: 'id', content: memeOne.DisplayName}">
         <div class="name text-center" data-bind="text: memeOne.HashTag"></div>
         <div>
             <img data-bind="memeImg: memeOne.PhotoName" />
         </div>
     </div>
     <div class="vs span2 text-center">VS</div>
-    <div class="meme span4">
+    <div class="meme span4" data-bind="dataDash: { name: 'id', content: memeTwo.DisplayName}">
         <div class="name text-center" data-bind="text: memeTwo.HashTag"></div>
         <div>
             <img data-bind="memeImg: memeTwo.PhotoName" />
@@ -31,11 +31,15 @@
 <div class="row" data-bind="visible: !loading()">
     <div class="span4 offset1 stats">
         <div class="votes">Votes: <span data-bind="text: memeOne.Votes"></span></div>
-        <div class="twitter">Talkin' bout <span data-bind="text: memeOne.HashTag"></span></div>
+        <div class="twitter">
+            Talkin' bout <span data-bind="text: memeOne.HashTag"></span>
+        </div>
     </div>
     <div class="span4 offset2 stats">
         <div class="votes">Votes: <span data-bind="text: memeTwo.Votes"></span></div>
-        <div class="twitter">Talkin' bout <span data-bind="text: memeTwo.HashTag"></span></div>
+        <div class="twitter">
+            Talkin' bout <span data-bind="text: memeTwo.HashTag"></span>
+        </div>
     </div>
 </div>
 
@@ -46,6 +50,13 @@
             update: function (element, valueAccessor, allBindingsAccessor, viewModel, bindingContext) {
                 element.src = bindingContext.$root.imgUrlBase + valueAccessor();
                 $(element).width(370);
+            }
+        };
+
+        ko.bindingHandlers.dataDash = {
+            update: function (element, valueAccessor, allBindingsAccessor, viewModel, bindingContext) {
+                var value = valueAccessor();
+                $(element).data(value.name, value.content);
             }
         };
 
@@ -70,9 +81,23 @@
             if (!viewModel.loading()) {
                 // Set loading
                 viewModel.loading(true);
+
                 // Record vote
-                
-                // Load new memes
+                // TODO: make it so someone can't just send ajax calls to 
+                // the web api to cast as many votes as they want
+                // TODO: shouldn't be forced to refresh the page, get rebinding knockout template working
+                $.ajax("/api/MemeApi/Vote?memeDisplayName=" + $(event.currentTarget).data("id"), {
+                    type: 'post',
+                    error: function (jqXHR, status, errorThrown) {
+                        // Load new memes
+                        location.reload();
+                    },
+                    success: function (data, status, jqXHR) {
+                        // Load new memes
+                        location.reload();
+                    }
+                });
+
             }
         });
     </script>

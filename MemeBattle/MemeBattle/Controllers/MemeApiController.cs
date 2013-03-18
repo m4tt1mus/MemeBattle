@@ -32,5 +32,14 @@ namespace MemeBattle.Controllers
             memes = session.Query<Meme>().ToList();
             return memes;
         }
+
+        public bool Vote(string memeDisplayName)
+        {
+            // RavenDB no need to prevent SQLi
+            Meme meme = session.Query<Meme>().SingleOrDefault(x => x.DisplayName.Equals(memeDisplayName));
+            meme.Votes++;
+            session.SaveChanges();
+            return true;
+        }
     }
 }

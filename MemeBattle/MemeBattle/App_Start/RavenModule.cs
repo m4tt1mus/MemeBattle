@@ -29,25 +29,8 @@ namespace MemeBattle.App_Start
         private IDocumentStore InitDocStore(IContext context)
         {
             var docStore = new EmbeddableDocumentStore() { };
-
             docStore.Initialize();
-            RavenIndexes.CreateIndexes(docStore);
             return docStore;
-        }
-    }
-
-    public static class RavenIndexes
-    {
-        public static void CreateIndexes(IDocumentStore docStore)
-        {
-            docStore.Conventions.FindIdentityProperty = prop =>
-            {
-                if (prop.DeclaringType == typeof(Meme))
-                    return prop.Name == "Name";
-
-                // Default
-                return prop.Name == "Id";
-            };
         }
     }
 }
