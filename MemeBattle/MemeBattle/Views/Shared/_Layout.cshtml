@@ -11,8 +11,9 @@
     @Scripts.Render("~/bundles/knockout")
 </head>
 <body>
-    @RenderBody()
-
+    <div class="content span12">
+        @RenderBody()
+    </div>
     @RenderSection("scripts", required: false)
 </body>
 </html>

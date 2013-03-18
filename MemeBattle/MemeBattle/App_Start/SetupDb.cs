@@ -20,72 +20,88 @@ namespace MemeBattle.App_Start
 
         private static void PutMemesInDb(IDocumentSession session)
         {
-            if (!session.Query<Meme>().Any(x => x.Name.Equals("Crazy Girl")))
+            // TODO add hashtags
+            if (!session.Query<Meme>().Any(x => x.Id.Equals("Crazy Girl")))
             {
                 Meme crazyGirl = new Meme()
                     {
-                        Name = "Crazy Girl",
-                        PhotoName = "CrazyGirl.jpg"
+                        Id = "CrazyGirl",
+                        DisplayName = "CrazyGirl",
+                        PhotoName = "CrazyGirl.jpg",
+                        HashTag = "#MemeBattlesCrazyGirl"
                     };
                 session.Store(crazyGirl);
             }
 
-            if (!session.Query<Meme>().Any(x => x.Name.Equals("Cyclist Cat")))
+            if (!session.Query<Meme>().Any(x => x.Id.Equals("Cyclist Cat")))
             {
                 Meme cyclistCat = new Meme()
                     {
-                        Name = "Cyclist Cat",
-                        PhotoName = "CyclistCat.jpg"
+                        Id = "CyclistCat",
+                        DisplayName = "Cyclist Cat",
+                        PhotoName = "CyclistCat.jpg",
+                        HashTag = "#MemeBattlesCyclistCat"
                     };
                 session.Store(cyclistCat);
             }
 
-            if (!session.Query<Meme>().Any(x => x.Name.Equals("Elyse")))
+            //session.Advanced.DocumentStore.DatabaseCommands.Delete("Memes/Elyse");
+            if (!session.Query<Meme>().Any(x => x.Id.Equals("Elyse")))
             {
                 Meme elyse = new Meme()
                     {
-                        Name = "Elyse",
-                        PhotoName = "ElyseQuit.jpg"
+                        Id = "Elyse",
+                        DisplayName = "Elyse",
+                        PhotoName = "ElyseQuit.jpg",
+                        HashTag = "#MemeBattlesElyse"
                     };
                 session.Store(elyse);
             }
 
-            if (!session.Query<Meme>().Any(x => x.Name.Equals("Hitler Cat")))
+            if (!session.Query<Meme>().Any(x => x.Id.Equals("Hitler Cat")))
             {
                 Meme hitlerCat = new Meme()
                     {
-                        Name = "Hitler Cat",
-                        PhotoName = "HitlerCat.jpg"
+                        Id = "HitlerCat",
+                        DisplayName = "Hilter Cat",
+                        PhotoName = "HitlerCat.jpg",
+                        HashTag = "#MemeBattlesHitlerCat"
                     };
                 session.Store(hitlerCat);
             }
 
-            if (!session.Query<Meme>().Any(x => x.Name.Equals("Honey Badger")))
+            if (!session.Query<Meme>().Any(x => x.Id.Equals("Honey Badger")))
             {
                 Meme honeyBadger = new Meme()
                     {
-                        Name = "Honey Badger",
-                        PhotoName = "HoneyBadger.gif"
+                        Id = "HoneyBadger",
+                        DisplayName = "Honey Badger",
+                        PhotoName = "HoneyBadger.gif",
+                        HashTag = "#MemeBattlesHoneyBadger"
                     };
                 session.Store(honeyBadger);
             }
 
-            if (!session.Query<Meme>().Any(x => x.Name.Equals("Lime Cat")))
+            if (!session.Query<Meme>().Any(x => x.Id.Equals("Lime Cat")))
             {
                 Meme limeCat = new Meme()
                     {
-                        Name = "Lime Cat",
-                        PhotoName = "LimeCat.jpg"
+                        Id = "LimeCat",
+                        DisplayName = "Lime Cat",
+                        PhotoName = "LimeCat.jpg",
+                        HashTag = "#MemeBattlesLimeCat"
                     };
                 session.Store(limeCat);
             }
 
-            if (!session.Query<Meme>().Any(x => x.Name.Equals("Lulz Sec")))
+            if (!session.Query<Meme>().Any(x => x.Id.Equals("Lulz Sec")))
             {
                 Meme lulzSec = new Meme()
                     {
-                        Name = "Lulz Sec",
-                        PhotoName = "LulzSec.jpg"
+                        Id = "LulzSec",
+                        DisplayName = "Lulz Sec",
+                        PhotoName = "LulzSec.jpg",
+                        HashTag = "#MemeBattlesLulzSec"
                     };
                 session.Store(lulzSec);
             }

@@ -28,16 +28,9 @@ namespace MemeBattle.Controllers
         // GET api/values
         public List<Meme> GetAll()
         {
-
             List<Meme> memes = new List<Meme>();
             memes = session.Query<Meme>().ToList();
             return memes;
-        }
-
-        public void Add(Meme meme)
-        {
-            session.Store(meme, meme.Name);
-            session.SaveChanges();
         }
     }
 }

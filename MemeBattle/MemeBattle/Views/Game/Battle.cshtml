@@ -2,7 +2,7 @@
     ViewBag.Title = "Meme Battle";
 
 }
-<div class="loading" data-bind="visible: loading">loading</div>
+<div class="loading" data-bind="visible: loading()">loading</div>
 
 
 <div class="row">
@@ -12,28 +12,30 @@
     </div>
 </div>
 
-<div class="battle row" data-bind="visible: !loading">
+<div class="battle row" data-bind="visible: !loading()">
     <div class="meme span4 offset1">
-        <div class="name text-center" data-bind="text: memeOne.Name"></div>
+        <div class="name text-center" data-bind="text: memeOne.HashTag"></div>
         <div>
             <img data-bind="memeImg: memeOne.PhotoName" />
         </div>
     </div>
     <div class="vs span2 text-center">VS</div>
     <div class="meme span4">
-        <div class="name text-center" data-bind="text: memeTwo.Name"></div>
+        <div class="name text-center" data-bind="text: memeTwo.HashTag"></div>
         <div>
             <img data-bind="memeImg: memeTwo.PhotoName" />
         </div>
     </div>
 </div>
 
-<div class="row">
+<div class="row" data-bind="visible: !loading()">
     <div class="span4 offset1 stats">
         <div class="votes">Votes: <span data-bind="text: memeOne.Votes"></span></div>
+        <div class="twitter">Talkin' bout <span data-bind="text: memeOne.HashTag"></span></div>
     </div>
     <div class="span4 offset2 stats">
         <div class="votes">Votes: <span data-bind="text: memeTwo.Votes"></span></div>
+        <div class="twitter">Talkin' bout <span data-bind="text: memeTwo.HashTag"></span></div>
     </div>
 </div>
 
@@ -52,19 +54,26 @@
             self.imgUrlBase = "@Url.Content("~/Images/Memes/")";
             self.memeOne = null;
             self.memeTwo = null;
-            self.loading = true;
+            self.loading = ko.observable(true);
         };
         var viewModel = new ViewModelConstructor();
 
         $.getJSON("/api/MemeApi/GetTwoRandom", function (data) {
             viewModel.memeOne = data[0];
             viewModel.memeTwo = data[1];
-            viewModel.loading = false;
+            viewModel.loading(false);
             ko.applyBindings(viewModel);
         });
 
         $(".battle").on('click', '.meme', function (event) {
-            alert('boom');
+            // Make sure we aren't handling multiple fast clicks
+            if (!viewModel.loading()) {
+                // Set loading
+                viewModel.loading(true);
+                // Record vote
+                
+                // Load new memes
+            }
         });
     </script>
 }
