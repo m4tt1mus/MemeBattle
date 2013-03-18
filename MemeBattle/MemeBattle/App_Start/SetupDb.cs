@@ -22,62 +22,90 @@ namespace MemeBattle.App_Start
         private static void PutMemesInDb(IDocumentSession session)
         {
             // Add default memes
-            Meme crazyGirl = new Meme()
-                {
-                    DisplayName = "Crazy Girl",
-                    PhotoName = "CrazyGirl.jpg",
-                    HashTag = "#MemeBattlesCrazyGirl"
-                };
-            session.Store(crazyGirl);
-
-            Meme cyclistCat = new Meme()
-                {
-                    DisplayName = "Cyclist Cat",
-                    PhotoName = "CyclistCat.jpg",
-                    HashTag = "#MemeBattlesCyclistCat"
-                };
-            session.Store(cyclistCat);
-
-            //Meme elyse = new Meme()
-            //{
-            //    DisplayName = "Elyse",
-            //    PhotoName = "ElyseQuit.jpg",
-            //    HashTag = "#MemeBattlesElyse"
-            //};
-            //session.Store(elyse);
+            session.Store(new Meme()
+            {
+                DisplayName = "Crazy Girl",
+                PhotoName = "CrazyGirl.jpg",
+                HashTag = "#MemeBattlesCrazyGirl"
+            });
 
 
-            //Meme hitlerCat = new Meme()
-            //    {
-            //        DisplayName = "Hilter Cat",
-            //        PhotoName = "HitlerCat.jpg",
-            //        HashTag = "#MemeBattlesHitlerCat"
-            //    };
-            //session.Store(hitlerCat);
+            session.Store(new Meme()
+            {
+                DisplayName = "Cyclist Cat",
+                PhotoName = "CyclistCat.jpg",
+                HashTag = "#MemeBattlesCyclistCat"
+            });
 
-            //Meme honeyBadger = new Meme()
-            //    {
-            //        DisplayName = "Honey Badger",
-            //        PhotoName = "HoneyBadger.gif",
-            //        HashTag = "#MemeBattlesHoneyBadger"
-            //    };
-            //session.Store(honeyBadger);
+            session.Store(new Meme()
+            {
+                DisplayName = "Elyse",
+                PhotoName = "ElyseQuit.jpg",
+                HashTag = "#MemeBattlesElyse"
+            });
 
-            //Meme limeCat = new Meme()
-            //    {
-            //        DisplayName = "Lime Cat",
-            //        PhotoName = "LimeCat.jpg",
-            //        HashTag = "#MemeBattlesLimeCat"
-            //    };
-            //session.Store(limeCat);
+            session.Store(new Meme()
+            {
+                DisplayName = "Hilter Cat",
+                PhotoName = "HitlerCat.jpg",
+                HashTag = "#MemeBattlesHitlerCat"
+            });
 
-            //Meme lulzSec = new Meme()
-            //    {
-            //        DisplayName = "Lulz Sec",
-            //        PhotoName = "LulzSec.jpg",
-            //        HashTag = "#MemeBattlesLulzSec"
-            //    };
-            //session.Store(lulzSec);
+            session.Store(new Meme()
+            {
+                DisplayName = "Honey Badger",
+                PhotoName = "HoneyBadger.gif",
+                HashTag = "#MemeBattlesHoneyBadger"
+            });
+
+            session.Store(new Meme()
+            {
+                DisplayName = "Lime Cat",
+                PhotoName = "LimeCat.jpg",
+                HashTag = "#MemeBattlesLimeCat"
+            });
+
+            session.Store(new Meme()
+            {
+                DisplayName = "Lulz Sec",
+                PhotoName = "LulzSec.jpg",
+                HashTag = "#MemeBattlesLulzSec"
+            });
+
+            session.Store(new Meme()
+            {
+                DisplayName = "Nyan Cat",
+                PhotoName = "NyanCat.jpg",
+                HashTag = "#MemeBattlesNyanCat"
+            });
+
+            session.Store(new Meme()
+            {
+                DisplayName = "OMG Cat",
+                PhotoName = "OmgCat.jpg",
+                HashTag = "#MemeBattlesOmgCat"
+            });
+
+            session.Store(new Meme()
+            {
+                DisplayName = "Pancake Bunny",
+                PhotoName = "PancakeBunny.jpg",
+                HashTag = "#MemeBattlesPancakeBunny"
+            });
+
+            session.Store(new Meme()
+            {
+                DisplayName = "Sad Keano",
+                PhotoName = "SadKeano.jpg",
+                HashTag = "#MemeBattlesSadKeano"
+            });
+
+            session.Store(new Meme()
+            {
+                DisplayName = "Tard Cat",
+                PhotoName = "TardCat.jpg",
+                HashTag = "#MemeBattlesTardCat"
+            });
 
             session.SaveChanges();
         }

@@ -5,7 +5,7 @@
 <div class="container">
     <div class="content row">
         <div class="span10 offset1">
-            
+
             <div class="text-center">
                 <h2 class="">Battle Meme</h2>
                 <div class="">Click a Meme to choose a winner.</div>
@@ -28,10 +28,13 @@
                     <div class="votes">Votes: <span data-bind="text: Votes"></span></div>
                     <div class="twitter" data-bind="visible: twitter.results.length > 0">
                         <div>
-                            Talkin' bout <span data-bind="text: HashTag"></span>
+                            Tweetin' bout <span data-bind="text: HashTag"></span>
                         </div>
-                        <div class="tweet well" data-bind="foreach: twitter.results">
-                            <span style="font-weight: bold" data-bind="text: from_user"></span>: <span data-bind="text: text"></span>
+                        <div class="tweets" data-bind="foreach: twitter.results">
+                            <div class="well">
+                                <span style="font-weight: bold" data-bind="text: from_user"></span>: <span data-bind="text: text">
+                                </span>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -58,36 +61,19 @@
         };
         var viewModel = new ViewModelConstructor();
 
-
         // Load the recent mentions on twitter for the Memes
-
         function LoadTwitterDiscussion(meme) {
-
-            meme.twitter = { "completed_in": 0.006, "max_id": 313498494809825280, "max_id_str": "313498494809825280", "page": 1, "query": "%23MemeBattlesCrazyGirl", "refresh_url": "?since_id=313498494809825280&q=%23MemeBattlesCrazyGirl", "results": [{ "created_at": "Mon, 18 Mar 2013 03:54:00 +0000", "from_user": "Meme_Battle", "from_user_id": 1276707236, "from_user_id_str": "1276707236", "from_user_name": "Meme Battle", "geo": null, "id": 313498494809825280, "id_str": "313498494809825280", "iso_language_code": "en", "metadata": { "result_type": "recent" }, "profile_image_url": "http:\/\/a0.twimg.com\/sticky\/default_profile_images\/default_profile_0_normal.png", "profile_image_url_https": "https:\/\/si0.twimg.com\/sticky\/default_profile_images\/default_profile_0_normal.png", "source": "&lt;a href=&quot;http:\/\/twitter.com\/&quot;&gt;web&lt;\/a&gt;", "text": "#MemeBattlesCrazyGirl Lets get this API going" }], "results_per_page": 15, "since_id": 0, "since_id_str": "0" };
-            LoadingCompleteCheck();
-            //$.ajax({
-            //    url: "https://search.twitter.com/search.json?" + $.param({ q: meme.HashTag }),
-            //    dataType: 'jsonp',
-            //    success: function (data) {
-            //        meme.twitter = data;
-            //        LoadingCompleteCheck();
-            //    }
-            //});
-
-            //// TODO: combine these calls so i don't have duplicate code
-            //$.ajax({
-            //    url: "https://search.twitter.com/search.json?" + $.param({ q: viewModel.memeOne.HashTag }),
-            //    dataType: 'jsonp',
-            //    success: function (data) {
-            //        viewModel.memeOne.twitter = data;
-            //        viewModel.loadingMemeOnetwitter(false);
-            //        LoadingCompleteCheck();
-            //    }
-            //});
+            $.ajax({
+                url: "https://search.twitter.com/search.json?" + $.param({ q: meme.HashTag }),
+                dataType: 'jsonp',
+                success: function (data) {
+                    meme.twitter = data;
+                    LoadingCompleteCheck();
+                }
+            });
         }
 
         // If everything is loaded, if it is applyBindings
-
         function LoadingCompleteCheck() {
             if (self.memes != null && self.memes[0].twitter != null && self.memes[1].twitter != null) {
                 viewModel.loading(false);
@@ -111,8 +97,7 @@
                 viewModel.loading(true);
 
                 // Record vote
-                // TODO: make it so someone can't just send ajax calls to 
-                // the web api to cast as many votes as they want
+                // TODO: make it so someone can't just send ajax calls to the web api to cast as many votes as they want
                 // TODO: shouldn't be forced to refresh the page, get rebinding knockout template working
                 $.ajax("/api/MemeApi/Vote?memeDisplayName=" + $(event.currentTarget).data("id"), {
                     type: 'post',
