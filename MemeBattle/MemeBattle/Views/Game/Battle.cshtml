@@ -2,41 +2,43 @@
     ViewBag.Title = "Meme Battle";
 
 }
-<div class="content span12">
-    <div class="row">
-        <div class="span12 text-center">
-            <h2 class="">Battle Meme</h2>
-            <div class="">Click a Meme to choose a winner.</div>
-        </div>
-    </div>
-
-    <div class="battle row" data-bind="foreach: memes, visible: !loading()">
-        <div class="meme span5" data-bind="dataDash: { name: 'id', content: DisplayName}">
-            <div class="name text-center" data-bind="text: HashTag"></div>
+<div class="container">
+    <div class="content row">
+        <div class="span10 offset1">
+            
             <div class="text-center">
-                <img data-bind="img: { pic: PhotoName, baseUrl: $root.imgUrlBase, width: 370 }" />
+                <h2 class="">Battle Meme</h2>
+                <div class="">Click a Meme to choose a winner.</div>
             </div>
-        </div>
-        <div class="vs span2 text-center" data-bind="visible: $index() == 0">
-            VS
+
+            <div class="battle row" data-bind="foreach: memes, visible: !loading()">
+                <div class="meme span4" data-bind="dataDash: { name: 'id', content: DisplayName}">
+                    <div class="name text-center" data-bind="text: HashTag"></div>
+                    <div class="text-center">
+                        <img data-bind="img: { pic: PhotoName, baseUrl: $root.imgUrlBase, width: 370 }" />
+                    </div>
+                </div>
+                <div class="vs span2 text-center" data-bind="visible: $index() == 0">
+                    VS
+                </div>
+            </div>
+
+            <div class="row" data-bind="foreach: memes, visible: !loading()">
+                <div class="span4 stats" data-bind="css: { offset2: $index() == 1 }">
+                    <div class="votes">Votes: <span data-bind="text: Votes"></span></div>
+                    <div class="twitter" data-bind="visible: twitter.results.length > 0">
+                        <div>
+                            Talkin' bout <span data-bind="text: HashTag"></span>
+                        </div>
+                        <div class="tweet well" data-bind="foreach: twitter.results">
+                            <span style="font-weight: bold" data-bind="text: from_user"></span>: <span data-bind="text: text"></span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
         </div>
     </div>
-
-
-    @*    <div class="row" data-bind="visible: !loading()">
-        <div class="span4 offset1 stats">
-            <div class="votes">Votes: <span data-bind="text: memeOne.Votes"></span></div>
-            <div class="twitter" data-bind="visible: memeOne.Tweets.results.length > 0">
-                <div>
-                    Talkin' bout <span data-bind="text: memeOne.HashTag"></span>
-                </div>
-                <div class="tweet" data-bind="foreach: memeOne.Tweets">
-                    
-                </div>
-            </div>
-        </div>
-    </div>*@
-
 </div>
 
 <div class="loading" data-bind="visible: loading()">
@@ -61,13 +63,13 @@
 
         function LoadTwitterDiscussion(meme) {
 
-            meme.Tweets = { "completed_in": 0.006, "max_id": 313498494809825280, "max_id_str": "313498494809825280", "page": 1, "query": "%23MemeBattlesCrazyGirl", "refresh_url": "?since_id=313498494809825280&q=%23MemeBattlesCrazyGirl", "results": [{ "created_at": "Mon, 18 Mar 2013 03:54:00 +0000", "from_user": "Meme_Battle", "from_user_id": 1276707236, "from_user_id_str": "1276707236", "from_user_name": "Meme Battle", "geo": null, "id": 313498494809825280, "id_str": "313498494809825280", "iso_language_code": "en", "metadata": { "result_type": "recent" }, "profile_image_url": "http:\/\/a0.twimg.com\/sticky\/default_profile_images\/default_profile_0_normal.png", "profile_image_url_https": "https:\/\/si0.twimg.com\/sticky\/default_profile_images\/default_profile_0_normal.png", "source": "&lt;a href=&quot;http:\/\/twitter.com\/&quot;&gt;web&lt;\/a&gt;", "text": "#MemeBattlesCrazyGirl Lets get this API going" }], "results_per_page": 15, "since_id": 0, "since_id_str": "0" };
+            meme.twitter = { "completed_in": 0.006, "max_id": 313498494809825280, "max_id_str": "313498494809825280", "page": 1, "query": "%23MemeBattlesCrazyGirl", "refresh_url": "?since_id=313498494809825280&q=%23MemeBattlesCrazyGirl", "results": [{ "created_at": "Mon, 18 Mar 2013 03:54:00 +0000", "from_user": "Meme_Battle", "from_user_id": 1276707236, "from_user_id_str": "1276707236", "from_user_name": "Meme Battle", "geo": null, "id": 313498494809825280, "id_str": "313498494809825280", "iso_language_code": "en", "metadata": { "result_type": "recent" }, "profile_image_url": "http:\/\/a0.twimg.com\/sticky\/default_profile_images\/default_profile_0_normal.png", "profile_image_url_https": "https:\/\/si0.twimg.com\/sticky\/default_profile_images\/default_profile_0_normal.png", "source": "&lt;a href=&quot;http:\/\/twitter.com\/&quot;&gt;web&lt;\/a&gt;", "text": "#MemeBattlesCrazyGirl Lets get this API going" }], "results_per_page": 15, "since_id": 0, "since_id_str": "0" };
             LoadingCompleteCheck();
             //$.ajax({
             //    url: "https://search.twitter.com/search.json?" + $.param({ q: meme.HashTag }),
             //    dataType: 'jsonp',
             //    success: function (data) {
-            //        meme.Tweets = data;
+            //        meme.twitter = data;
             //        LoadingCompleteCheck();
             //    }
             //});
@@ -77,8 +79,8 @@
             //    url: "https://search.twitter.com/search.json?" + $.param({ q: viewModel.memeOne.HashTag }),
             //    dataType: 'jsonp',
             //    success: function (data) {
-            //        viewModel.memeOne.Tweets = data;
-            //        viewModel.loadingMemeOneTweets(false);
+            //        viewModel.memeOne.twitter = data;
+            //        viewModel.loadingMemeOnetwitter(false);
             //        LoadingCompleteCheck();
             //    }
             //});
@@ -87,7 +89,7 @@
         // If everything is loaded, if it is applyBindings
 
         function LoadingCompleteCheck() {
-            if (self.memes != null && self.memes[0].Tweets != null && self.memes[1].Tweets != null) {
+            if (self.memes != null && self.memes[0].twitter != null && self.memes[1].twitter != null) {
                 viewModel.loading(false);
                 ko.applyBindings(viewModel);
             }
