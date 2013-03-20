@@ -9,7 +9,7 @@ using MemeBattle.Models;
 
 namespace MemeBattle.App_Start
 {
-    public static class SetupDb
+    public static class SetupRavenDb
     {
         public static void Initialize()
         {
