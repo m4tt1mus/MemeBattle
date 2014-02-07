@@ -47,21 +47,25 @@ namespace MemeBattle.Controllers
 
             tweets.Add(new Tweet
                 {
-                    results = new Results
+                    SearchTerm = q,
+                    Results = new Results
                         {
-                            from_user  = "User1",
-                            text = "Tweet Text"
+                            ResultNum = 1,
+                            From_User = "User1",
+                            Text = "Tweet Text"
                         }
                 });
 
             tweets.Add(new Tweet
-            {
-                results = new Results
                 {
-                    from_user = "User2",
-                    text = "Tweet Text"
-                }
-            });
+                    SearchTerm = q,
+                    Results = new Results
+                    {
+                        ResultNum = 2,
+                        From_User = "User2",
+                        Text = "Tweet Text"
+                    }
+                });
 
             return tweets;
         }

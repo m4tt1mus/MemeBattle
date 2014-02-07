@@ -7,12 +7,14 @@ namespace MemeBattle.Models
 {
     public class Tweet
     {
-        public Results results { get; set; }
+        public string SearchTerm { get; set; }
+        public Results Results { get; set; }
     }
 
     public class Results
     {
-        public string from_user { get; set; }
-        public string text { get; set; }
+        public int ResultNum { get; set; }
+        public string From_User { get; set; }
+        public string Text { get; set; }
     }
 }

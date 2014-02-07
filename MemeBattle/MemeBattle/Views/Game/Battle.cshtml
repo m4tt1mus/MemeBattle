@@ -54,16 +54,6 @@
             ko.applyBindings(viewModel);
         });
 
-        function NewBattle() {
-            viewModel.loading(true);
-
-            // Load the Meme opponents
-            $.getJSON("/api/MemeApi/GetTwoRandom", function (data) {
-                viewModel.memes = data;
-                viewModel.loading(false);
-            });
-        }
-
         // Detect when someone chooses the winner
         $(".battle").on('click', '.meme', function (event) {
             // Make sure we aren't handling multiple fast clicks
@@ -79,6 +69,37 @@
 
             }
         });
+
+        function NewBattle() {
+            viewModel.loading(true);
+
+            $.getJSON("/api/MemeApi/GetTwoRandom") // Load the Meme opponents
+                .success(function (data) {
+                    viewModel.memes = data;
+                    PullTwitterInfo();
+                })
+                .always(function () {
+                    viewModel.loading(false);
+                });
+        }
+
+        function PullTwitterInfo() {
+            for (var i = 0; i < viewModel.memes.length; i++) {
+                $.post("/api/MemeApi/TwitterFake?" + $.param({ q: viewModel.memes[i].HashTag }))
+                    .success(function (data) {
+                        GetMemeByHashTag(data[0].SearchTerm).twitter = data;
+                    });
+            }
+        }
+
+        function GetMemeByHashTag(hashtag) {
+            var meme = null;
+            for (var i = 0; i < viewModel.memes.length; i++) {
+                if (viewModel.memes[i].HashTag == hashtag)
+                    meme = viewModel.memes[i];
+            }
+            return meme;
+        }
     </script>
 }
 
