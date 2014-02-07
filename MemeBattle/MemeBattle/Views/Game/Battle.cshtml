@@ -11,11 +11,11 @@
                 <div class="">Click a Meme to choose a winner.</div>
             </div>
 
-            <div class="battle row" data-bind="foreach: memes, visible: !loading()">
+            <div class="battle row" data-bind="foreach: Memes, visible: !Loading()">
                 <div class="meme span4" data-bind="dataDash: { name: 'id', content: DisplayName }">
                     <div class="name text-center" data-bind="text: HashTag"></div>
                     <div class="text-center">
-                        <img data-bind="img: { pic: PhotoName, baseUrl: $root.imgUrlBase, width: 370 }" />
+                        <img data-bind="img: { pic: PhotoName, baseUrl: $root.ImgUrlBase, width: 370 }" />
                     </div>
                 </div>
                 <div class="vs span2 text-center" data-bind="visible: $index() == 0">
@@ -23,9 +23,20 @@
                 </div>
             </div>
 
-            <div class="row" data-bind="foreach: memes, visible: !loading()">
+            <div class="row" data-bind="foreach: Memes, visible: !Loading()">
                 <div class="span4 stats" data-bind="css: { offset2: $index() == 1 }">
                     <div class="votes">Votes: <span data-bind="text: Votes"></span></div>
+                    <div class="twitter" data-bind="visible: Twitter.length > 0">
+                        <div>
+                            Tweetin' bout <span data-bind="text: HashTag"></span>
+                        </div>
+                        <div class="tweets" data-bind="foreach: Twitter.Results">
+                            <div class="well">
+                                <span style="font-weight: bold" data-bind="text: From_User"></span>: <span data-bind="text: Text">
+                                </span>
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </div>
 
@@ -33,7 +44,7 @@
     </div>
 </div>
 
-<div class="loading" data-bind="visible: loading()">
+<div class="loading" data-bind="visible: Loading()">
     <img src="/content/images/ajax-loader.gif" />
 </div>
 
@@ -43,9 +54,9 @@
 
         var ViewModelConstructor = function () {
             self = this;
-            self.imgUrlBase = "@Url.Content("~/Images/Memes/")";
-            self.memes = null;
-            self.loading = ko.observable(true);
+            self.ImgUrlBase = "@Url.Content("~/Images/Memes/")";
+            self.Memes = null;
+            self.Loading = ko.observable(true);
         };
         var viewModel = new ViewModelConstructor();
 
@@ -57,8 +68,8 @@
         // Detect when someone chooses the winner
         $(".battle").on('click', '.meme', function (event) {
             // Make sure we aren't handling multiple fast clicks
-            if (!viewModel.loading()) {
-                viewModel.loading(true);
+            if (!viewModel.Loading()) {
+                viewModel.Loading(true);
 
                 // Record vote
                 $.ajax("/api/MemeApi/Vote?memeDisplayName=" + $(event.currentTarget).data("id"), {
@@ -71,32 +82,34 @@
         });
 
         function NewBattle() {
-            viewModel.loading(true);
+            viewModel.Loading(true);
 
             $.getJSON("/api/MemeApi/GetTwoRandom") // Load the Meme opponents
                 .success(function (data) {
-                    viewModel.memes = data;
+                    data[0].Twitter = [];
+                    data[1].Twitter = [];
+                    viewModel.Memes = data;
                     PullTwitterInfo();
                 })
                 .always(function () {
-                    viewModel.loading(false);
+                    viewModel.Loading(false);
                 });
         }
 
         function PullTwitterInfo() {
-            for (var i = 0; i < viewModel.memes.length; i++) {
-                $.post("/api/MemeApi/TwitterFake?" + $.param({ q: viewModel.memes[i].HashTag }))
+            for (var i = 0; i < viewModel.Memes.length; i++) {
+                $.post("/api/MemeApi/TwitterFake?" + $.param({ q: viewModel.Memes[i].HashTag }))
                     .success(function (data) {
-                        GetMemeByHashTag(data[0].SearchTerm).twitter = data;
+                        GetMemeByHashTag(data[0].SearchTerm).Twitter = data;
                     });
             }
         }
 
         function GetMemeByHashTag(hashtag) {
             var meme = null;
-            for (var i = 0; i < viewModel.memes.length; i++) {
-                if (viewModel.memes[i].HashTag == hashtag)
-                    meme = viewModel.memes[i];
+            for (var i = 0; i < viewModel.Memes.length; i++) {
+                if (viewModel.Memes[i].HashTag == hashtag)
+                    meme = viewModel.Memes[i];
             }
             return meme;
         }
