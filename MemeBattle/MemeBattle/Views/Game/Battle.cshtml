@@ -26,17 +26,6 @@
             <div class="row" data-bind="foreach: memes, visible: !loading()">
                 <div class="span4 stats" data-bind="css: { offset2: $index() == 1 }">
                     <div class="votes">Votes: <span data-bind="text: Votes"></span></div>
-                    <div class="twitter" data-bind="visible: twitter.results.length > 0">
-                        <div>
-                            Tweetin' bout <span data-bind="text: HashTag"></span>
-                        </div>
-                        <div class="tweets" data-bind="foreach: twitter.results">
-                            <div class="well">
-                                <span style="font-weight: bold" data-bind="text: from_user"></span>: <span data-bind="text: text">
-                                </span>
-                            </div>
-                        </div>
-                    </div>
                 </div>
             </div>
 
@@ -60,32 +49,11 @@
         };
         var viewModel = new ViewModelConstructor();
 
-        // Load the recent mentions on twitter for the Memes
-        function LoadTwitterDiscussion(meme) {
-            $.ajax({
-                url: "/api/MemeApi/TwitterFake?" + $.param({ q: meme.HashTag }),
-                dataType: 'post',
-                success: function (data) {
-                    meme.twitter = data;
-                    LoadingCompleteCheck();
-                },
-            });
-        }
-
-        // If everything is loaded applyBindings
-        function LoadingCompleteCheck() {
-            if (self.memes != null && self.memes[0].twitter != null && self.memes[1].twitter != null) {
-                viewModel.loading(false);
-                ko.applyBindings(viewModel);
-            }
-        }
-
         // Load the Meme opponents
         $.getJSON("/api/MemeApi/GetTwoRandom", function (data) {
             viewModel.memes = data;
-
-            LoadTwitterDiscussion(viewModel.memes[0]);
-            LoadTwitterDiscussion(viewModel.memes[1]);
+            viewModel.loading(false);
+            ko.applyBindings(viewModel);
         });
 
         // Detect when someone chooses the winner
@@ -96,8 +64,6 @@
                 viewModel.loading(true);
 
                 // Record vote
-                // TODO: make it so someone can't just send ajax calls to the web api to cast as many votes as they want
-                // TODO: shouldn't be forced to refresh the page, get rebinding knockout template working
                 $.ajax("/api/MemeApi/Vote?memeDisplayName=" + $(event.currentTarget).data("id"), {
                     type: 'post',
                     error: function (jqXHR, status, errorThrown) {
