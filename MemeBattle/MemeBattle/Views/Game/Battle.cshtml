@@ -12,7 +12,7 @@
             </div>
 
             <div class="battle row" data-bind="foreach: memes, visible: !loading()">
-                <div class="meme span4" data-bind="dataDash: { name: 'id', content: DisplayName}">
+                <div class="meme span4" data-bind="dataDash: { name: 'id', content: DisplayName }">
                     <div class="name text-center" data-bind="text: HashTag"></div>
                     <div class="text-center">
                         <img data-bind="img: { pic: PhotoName, baseUrl: $root.imgUrlBase, width: 370 }" />
@@ -52,8 +52,8 @@
         // Load the Meme opponents
         $.getJSON("/api/MemeApi/GetTwoRandom", function (data) {
             viewModel.memes = data;
-            viewModel.loading(false);
             ko.applyBindings(viewModel);
+            viewModel.loading(false);
         });
 
         // Detect when someone chooses the winner
@@ -62,18 +62,16 @@
             if (!viewModel.loading()) {
                 // Set loading
                 viewModel.loading(true);
-
+                
                 // Record vote
                 $.ajax("/api/MemeApi/Vote?memeDisplayName=" + $(event.currentTarget).data("id"), {
                     type: 'post',
-                    error: function (jqXHR, status, errorThrown) {
-                        // Load new memes
-                        window.location.href = "@Url.Action("Battle", "Game")";
-                    },
-                    success: function (data, status, jqXHR) {
-                        // Load new memes
-                        window.location.href = "@Url.Action("Battle", "Game")";
-                    }
+                }).error(function (jqXHR, status, errorThrown) {
+                    // Load new memes
+                    window.location.href = "@Url.Action("Battle", "Game")";
+                }).success(function (data, status, jqXHR) {
+                    // Load new memes
+                    window.location.href = "@Url.Action("Battle", "Game")";
                 });
 
             }
