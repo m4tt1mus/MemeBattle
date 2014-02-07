@@ -64,7 +64,7 @@
         function LoadTwitterDiscussion(meme) {
             $.ajax({
                 url: "/api/MemeApi/TwitterFake?" + $.param({ q: meme.HashTag }),
-                dataType: 'jsonp',
+                dataType: 'post',
                 success: function (data) {
                     meme.twitter = data;
                     LoadingCompleteCheck();

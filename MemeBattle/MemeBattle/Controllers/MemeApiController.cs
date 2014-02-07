@@ -41,25 +41,25 @@ namespace MemeBattle.Controllers
             return true;
         }
 
-        public List<Tweet> TwitterFake(string q, string callback)
+        public List<Tweet> TwitterFake(string q)
         {
             var tweets = new List<Tweet>();
 
             tweets.Add(new Tweet
                 {
-                    Results = new Results
+                    results = new Results
                         {
-                            From_User  = "User1",
-                            Text = "Tweet Text"
+                            from_user  = "User1",
+                            text = "Tweet Text"
                         }
                 });
 
             tweets.Add(new Tweet
             {
-                Results = new Results
+                results = new Results
                 {
-                    From_User = "User2",
-                    Text = "Tweet Text"
+                    from_user = "User2",
+                    text = "Tweet Text"
                 }
             });
 
