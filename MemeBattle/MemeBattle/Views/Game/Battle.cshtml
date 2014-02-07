@@ -49,29 +49,32 @@
         };
         var viewModel = new ViewModelConstructor();
 
-        // Load the Meme opponents
-        $.getJSON("/api/MemeApi/GetTwoRandom", function (data) {
-            viewModel.memes = data;
+        $(document).ready(function () {
+            NewBattle();
             ko.applyBindings(viewModel);
-            viewModel.loading(false);
         });
+
+        function NewBattle() {
+            viewModel.loading(true);
+
+            // Load the Meme opponents
+            $.getJSON("/api/MemeApi/GetTwoRandom", function (data) {
+                viewModel.memes = data;
+                viewModel.loading(false);
+            });
+        }
 
         // Detect when someone chooses the winner
         $(".battle").on('click', '.meme', function (event) {
             // Make sure we aren't handling multiple fast clicks
             if (!viewModel.loading()) {
-                // Set loading
                 viewModel.loading(true);
-                
+
                 // Record vote
                 $.ajax("/api/MemeApi/Vote?memeDisplayName=" + $(event.currentTarget).data("id"), {
                     type: 'post',
-                }).error(function (jqXHR, status, errorThrown) {
-                    // Load new memes
-                    window.location.href = "@Url.Action("Battle", "Game")";
-                }).success(function (data, status, jqXHR) {
-                    // Load new memes
-                    window.location.href = "@Url.Action("Battle", "Game")";
+                }).always(function (data, status, jqXHR) {
+                    NewBattle(); // start new battle
                 });
 
             }
