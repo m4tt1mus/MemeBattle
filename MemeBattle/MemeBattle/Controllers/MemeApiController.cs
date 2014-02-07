@@ -25,7 +25,6 @@ namespace MemeBattle.Controllers
             return memes;
         }
 
-        // GET api/values
         public List<Meme> GetAll()
         {
             List<Meme> memes = new List<Meme>();
@@ -40,6 +39,31 @@ namespace MemeBattle.Controllers
             meme.Votes++;
             session.SaveChanges();
             return true;
+        }
+
+        public List<Tweet> TwitterFake(string q, string callback)
+        {
+            var tweets = new List<Tweet>();
+
+            tweets.Add(new Tweet
+                {
+                    Results = new Results
+                        {
+                            From_User  = "User1",
+                            Text = "Tweet Text"
+                        }
+                });
+
+            tweets.Add(new Tweet
+            {
+                Results = new Results
+                {
+                    From_User = "User2",
+                    Text = "Tweet Text"
+                }
+            });
+
+            return tweets;
         }
     }
 }
